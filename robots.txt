@@ -2,5 +2,4 @@
 User-agent: *
 Allow: /
 
-# החלף YOUR-DOMAIN בכתובת האתר בעת העלייה לאוויר:
-Sitemap: https://YOUR-DOMAIN/sitemap.xml
+Sitemap: https://shadinajem1988-maker.github.io/shafa-bclick-landing/sitemap.xml
