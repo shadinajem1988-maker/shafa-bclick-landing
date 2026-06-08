@@ -1,0 +1,6 @@
+# שפה בקליק - robots.txt
+User-agent: *
+Allow: /
+
+# החלף YOUR-DOMAIN בכתובת האתר בעת העלייה לאוויר:
+Sitemap: https://YOUR-DOMAIN/sitemap.xml
