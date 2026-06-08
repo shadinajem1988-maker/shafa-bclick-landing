@@ -405,6 +405,9 @@ form input,form select{width:100%;padding:14px 16px;border-radius:12px;border:1p
 form input:focus,form select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-soft)}
 form .btn{width:100%;margin-top:4px}
 .form-note{color:var(--gray-soft);font-size:.84rem;text-align:center;margin-top:11px}
+.field-error{display:none;color:#d63031;font-size:.82rem;font-weight:600;margin-top:6px}
+.field.invalid .field-error{display:block}
+.field.invalid input,.field.invalid select{border-color:#e74c3c;box-shadow:0 0 0 3px rgba(231,76,60,.13)}
 .form-success{display:none;text-align:center;padding:26px}
 .form-success.show{display:block}
 .form-success .v{width:62px;height:62px;border-radius:50%;background:var(--teal);color:#000;display:grid;place-items:center;font-size:2rem;margin:0 auto 14px;font-weight:900}
@@ -913,8 +916,8 @@ footer{background:var(--ink);color:#fff;padding:52px 0 28px}
       </div>
       <div class="reveal in">
         <form id="leadForm" novalidate="">
-          <div class="field"><label for="name">שם מלא</label><input type="text" id="name" placeholder="איך קוראים לך?" required=""></div>
-          <div class="field"><label for="phone">טלפון</label><input type="tel" id="phone" placeholder="05_-_______" inputmode="tel" dir="ltr" required=""></div>
+          <div class="field"><label for="name">שם מלא</label><input type="text" id="name" placeholder="איך קוראים לך?" autocomplete="name" required=""><small class="field-error" id="errName">נא להזין שם (לפחות 2 אותיות)</small></div>
+          <div class="field"><label for="phone">טלפון</label><input type="tel" id="phone" placeholder="05X-XXXXXXX" inputmode="numeric" dir="ltr" autocomplete="tel" maxlength="13" required=""><small class="field-error" id="errPhone">נא להזין מספר נייד ישראלי תקין (למשל 050-1234567)</small></div>
           <div class="field"><label for="track">מה מעניין אותך?</label>
             <select id="track">
               <option value="ערבית מדוברת קבוצתי">ערבית מדוברת קבוצתי</option>
@@ -987,7 +990,7 @@ footer{background:var(--ink);color:#fff;padding:52px 0 28px}
 <script>
 /* ===== שחזור שינויים שמורים רץ לפני שאר הסקריפטים ===== */
 (function(){
-  var PAGE_VERSION='2026-06-09-25';
+  var PAGE_VERSION='2026-06-09-26';
   try{
     if(localStorage.getItem('sbk_ver')!==PAGE_VERSION){localStorage.removeItem('sbk_page');localStorage.setItem('sbk_ver',PAGE_VERSION);}
     var d=localStorage.getItem('sbk_design');
@@ -1092,19 +1095,30 @@ if(heroVid){heroVid.addEventListener('loadeddata',()=>{const ph=document.querySe
 const waUrl=(m)=>`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(m)}`;
 ['waFloat','waLink','waSticky'].forEach(id=>{const el=document.getElementById(id);if(el)el.href=waUrl(CONFIG.waDefault);});
 
+/* ===== ולידציית טופס: מספר נייד ישראלי תקין + הודעות שגיאה ברורות ===== */
+function normILPhone(p){ var d=(p||'').replace(/\D/g,''); if(d.indexOf('972')===0) d='0'+d.slice(3); return d; }
+function isValidILMobile(p){ return /^05\d{8}$/.test(normILPhone(p)); }   /* 05X + 7 ספרות = 10 ספרות */
+function setFieldError(id,on){ var el=document.getElementById(id); if(!el)return; var f=el.closest('.field'); if(f) f.classList.toggle('invalid',on); }
+['name','phone'].forEach(function(id){ var el=document.getElementById(id); if(el) el.addEventListener('input',function(){ setFieldError(id,false); }); });
+
 /* lead form -> whatsapp */
 document.getElementById('leadForm').addEventListener('submit',(ev)=>{
   ev.preventDefault();
   const name=document.getElementById('name').value.trim();
   const phone=document.getElementById('phone').value.trim();
   const track=document.getElementById('track').value;
-  if(name.length<2){document.getElementById('name').focus();return;}
-  if(phone.length<9){document.getElementById('phone').focus();return;}
 
+  /* בדיקת תקינות עם פוקוס וגלילה לשדה הראשון השגוי */
+  let ok=true, firstBad=null;
+  if(name.length<2){ setFieldError('name',true); firstBad=firstBad||document.getElementById('name'); ok=false; } else setFieldError('name',false);
+  if(!isValidILMobile(phone)){ setFieldError('phone',true); firstBad=firstBad||document.getElementById('phone'); ok=false; } else setFieldError('phone',false);
+  if(!ok){ if(firstBad){ firstBad.focus(); try{firstBad.scrollIntoView({behavior:'smooth',block:'center'});}catch(e){} } return; }
+
+  const phoneNorm=normILPhone(phone);
   /* תשתית לידים: שולח לכל היעדים המוגדרים (מייל + גיליון + webhook) */
-  sendLead({name:name,phone:phone,track:track,source:'דף נחיתה',utm:getUTM(),ts:new Date().toISOString()});
+  sendLead({name:name,phone:phoneNorm,track:track,source:'דף נחיתה',utm:getUTM(),ts:new Date().toISOString()});
 
-  const url=waUrl(`היי! אני ${name} (${phone}). מעניין אותי: ${track}. אשמח לשיחת ייעוץ חינם`);
+  const url=waUrl(`היי! אני ${name} (${phoneNorm}). מעניין אותי: ${track}. אשמח לשיחת ייעוץ חינם`);
   document.getElementById('leadForm').style.display='none';
   document.getElementById('formSuccess').classList.add('show');
   if(window.fbq) fbq('track','Lead',{content_name:track});      /* אירוע ליד רשמי לפיקסל */
@@ -1134,13 +1148,18 @@ if(vodForm){
   });
 }
 
-/* הסתרת הבר התחתון (CTA) כשטופס הלידים גלוי — שלא יסתיר את כפתור השליחה */
+/* הסתרת הבר התחתון + באנר העוגיות כשטופס הלידים גלוי — שלא יסתירו את כפתור השליחה */
 (function(){
-  var bar=document.querySelector('.mobile-cta'), lead=document.getElementById('lead');
-  if(bar&&lead&&'IntersectionObserver' in window){
-    bar.style.transition='transform .3s ease';
+  var bar=document.querySelector('.mobile-cta'), cookie=document.querySelector('.cookie-banner'), lead=document.getElementById('lead');
+  if(lead&&'IntersectionObserver' in window){
+    if(bar) bar.style.transition='transform .3s ease';
+    if(cookie) cookie.style.transition='opacity .3s ease';
     new IntersectionObserver(function(es){
-      es.forEach(function(e){ bar.style.transform = e.isIntersecting ? 'translateY(130%)' : 'translateY(0)'; });
+      es.forEach(function(e){
+        var hide=e.isIntersecting;
+        if(bar) bar.style.transform = hide ? 'translateY(130%)' : 'translateY(0)';
+        if(cookie){ cookie.style.opacity = hide ? '0' : ''; cookie.style.pointerEvents = hide ? 'none' : ''; }
+      });
     },{threshold:0.18}).observe(lead);
   }
 })();
