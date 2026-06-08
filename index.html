@@ -483,6 +483,17 @@ footer{background:var(--ink);color:#fff;padding:52px 0 28px}
   .hero h1{font-size:2.05rem}.hero-cta .btn{flex:1}
   .hero-trust{flex-wrap:wrap;justify-content:center;gap:8px}
 }
+/* ===== Mobile carousels (scroll-snap) — החלקה ימינה/שמאלה כמו אפליקציה ===== */
+@media(max-width:680px){
+  .tcards{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;
+    padding:4px 2px 18px;-webkit-overflow-scrolling:touch;scrollbar-width:none;scroll-padding-inline:2px}
+  .tcards::-webkit-scrollbar{display:none}
+  .tcards>.t{scroll-snap-align:center;flex:0 0 86%;min-width:86%}
+  .lang-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;
+    padding:4px 2px 18px;-webkit-overflow-scrolling:touch;scrollbar-width:none;scroll-padding-inline:2px}
+  .lang-grid::-webkit-scrollbar{display:none}
+  .lang-grid>.lang{scroll-snap-align:center;flex:0 0 44%;min-width:44%}
+}
 /* ===== Small phones (≤480px) — התאמה לטלפונים קטנים ===== */
 @media(max-width:480px){
   .container{padding-inline:16px}
@@ -975,7 +986,7 @@ footer{background:var(--ink);color:#fff;padding:52px 0 28px}
 <script>
 /* ===== שחזור שינויים שמורים רץ לפני שאר הסקריפטים ===== */
 (function(){
-  var PAGE_VERSION='2026-06-08-23';
+  var PAGE_VERSION='2026-06-08-24';
   try{
     if(localStorage.getItem('sbk_ver')!==PAGE_VERSION){localStorage.removeItem('sbk_page');localStorage.setItem('sbk_ver',PAGE_VERSION);}
     var d=localStorage.getItem('sbk_design');
@@ -1121,6 +1132,17 @@ if(vodForm){
     document.getElementById('vodOk').classList.add('show');
   });
 }
+
+/* הסתרת הבר התחתון (CTA) כשטופס הלידים גלוי — שלא יסתיר את כפתור השליחה */
+(function(){
+  var bar=document.querySelector('.mobile-cta'), lead=document.getElementById('lead');
+  if(bar&&lead&&'IntersectionObserver' in window){
+    bar.style.transition='transform .3s ease';
+    new IntersectionObserver(function(es){
+      es.forEach(function(e){ bar.style.transform = e.isIntersecting ? 'translateY(130%)' : 'translateY(0)'; });
+    },{threshold:0.18}).observe(lead);
+  }
+})();
 </script>
 
 <!-- ============ Schema.org (SEO) ============ -->
