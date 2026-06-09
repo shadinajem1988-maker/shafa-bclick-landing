@@ -532,6 +532,10 @@ footer{background:var(--ink);color:#fff;padding:52px 0 28px}
   .lang .mono{width:38px;height:38px;font-size:1rem}
   .mobile-cta .btn{padding:13px 12px;font-size:.95rem}
 }
+@media(max-width:640px){
+  #magazine a[aria-label]{grid-template-columns:1fr!important}
+  #magazine a[aria-label]>span:first-child{min-height:190px!important}
+}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 </style>
 </head>
@@ -901,6 +905,30 @@ footer{background:var(--ink);color:#fff;padding:52px 0 28px}
 ]}
 </script>
 
+<!-- ============ 5.5 מגזין / מאמרים ============ -->
+<section class="section" id="magazine" style="background:var(--bg-alt);border-top:1px solid var(--border)">
+  <div class="container center">
+    <h2 class="title reveal in">מהמגזין שלנו — <span class="hl">סיפורים על שפה ותרבות</span></h2>
+    <p class="lead reveal in" style="margin:12px auto 0;text-align:center">לא רק קורס — עולם שלם. מאמרים מרתקים על השפה הערבית, היסטוריה, תרבות, ועל הקסם של ללמוד שפה חדשה.</p>
+  </div>
+  <div class="container">
+    <a href="blog/historiat-hasafa-haaravit.html" class="reveal in" style="display:grid;grid-template-columns:1fr 1fr;gap:0;background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg);margin-top:34px;max-width:920px;margin-inline:auto" aria-label="המאמר המוביל">
+      <span style="position:relative;min-height:240px;background:#0b1120">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Arabic_calligraphy_by_Ahmad_Neyrizi%2C_Muraqqa-e_6021_%2802%29.jpg/800px-Arabic_calligraphy_by_Ahmad_Neyrizi%2C_Muraqqa-e_6021_%2802%29.jpg" alt="קליגרפיה ערבית — מהמגזין" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+      </span>
+      <span style="padding:30px 28px;display:flex;flex-direction:column;justify-content:center;text-align:right">
+        <span style="align-self:flex-start;background:var(--teal);color:#04211e;font-weight:800;font-size:.78rem;padding:5px 13px;border-radius:50px;margin-bottom:13px">מאמר מוביל · תרבות ושפה</span>
+        <span style="font-size:1.5rem;font-weight:900;color:var(--ink);line-height:1.2;letter-spacing:-.4px;margin-bottom:9px">ההיסטוריה והיופי של השפה הערבית</span>
+        <span style="color:var(--gray);margin-bottom:16px">מסע בן 1,500 שנה — משירת המדבר, דרך תור הזהב של המדע, ועד ההיגיון היפהפה שמסתתר בכל מילה.</span>
+        <span style="align-self:flex-start;background:var(--ink);color:#fff;font-weight:700;padding:12px 24px;border-radius:50px">קראו את המאמר →</span>
+      </span>
+    </a>
+    <div class="center" style="margin-top:28px">
+      <a href="blog/" class="btn btn-outline" data-cta="magazine-all">לכל המאמרים →</a>
+    </div>
+  </div>
+</section>
+
 <!-- ============ 6. FINAL CTA ============ -->
 <section class="section final" id="lead">
   <div class="container">
@@ -992,7 +1020,7 @@ footer{background:var(--ink);color:#fff;padding:52px 0 28px}
 <script>
 /* ===== שחזור שינויים שמורים רץ לפני שאר הסקריפטים ===== */
 (function(){
-  var PAGE_VERSION='2026-06-09-27';
+  var PAGE_VERSION='2026-06-10-28';
   try{
     if(localStorage.getItem('sbk_ver')!==PAGE_VERSION){localStorage.removeItem('sbk_page');localStorage.setItem('sbk_ver',PAGE_VERSION);}
     var d=localStorage.getItem('sbk_design');

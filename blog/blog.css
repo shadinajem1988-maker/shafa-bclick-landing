@@ -107,3 +107,62 @@ footer.site .small{color:rgba(255,255,255,.45);font-size:.85rem;margin-top:14px}
   .trinity-table{font-size:.95rem;display:block;overflow-x:auto}
   article ul,article ol{margin-right:18px}
 }
+
+/* ====================================================================
+   שכבת מגזין — מאמרים פרימיום (כיסוי, drop-cap, ציטוטים, figure)
+   ==================================================================== */
+.progress{position:fixed;top:0;left:0;height:4px;width:0;background:linear-gradient(90deg,var(--teal),var(--teal-dark));z-index:101;transition:width .1s linear}
+
+/* hero כיסוי דרמטי */
+.post-hero{position:relative;border-radius:0 0 28px 28px;overflow:hidden;margin-bottom:8px;min-height:clamp(320px,52vw,520px);display:flex;align-items:flex-end;background:#0b1120}
+.post-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.62}
+.post-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(7,12,20,.92) 0%,rgba(7,12,20,.55) 45%,rgba(7,12,20,.25) 100%)}
+.post-hero .ph-in{position:relative;z-index:2;max-width:var(--maxw);margin-inline:auto;padding:30px 20px 34px;width:100%}
+.post-hero .kicker{display:inline-block;background:var(--teal);color:#04211e;font-weight:800;font-size:.82rem;letter-spacing:.4px;padding:6px 15px;border-radius:50px;margin-bottom:14px}
+.post-hero h1{color:#fff;font-size:clamp(1.9rem,5vw,3.1rem);font-weight:900;line-height:1.12;letter-spacing:-.8px;text-shadow:0 2px 30px rgba(0,0,0,.4);margin:0}
+.post-hero .sub{color:rgba(255,255,255,.85);font-size:clamp(1.02rem,2vw,1.25rem);margin-top:12px;max-width:680px}
+.post-meta{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;color:var(--gray-soft);font-size:.9rem;margin:18px 0 26px}
+.post-meta .au{display:flex;align-items:center;gap:8px;color:var(--gray)}
+.post-meta .av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--teal-dark));display:grid;place-items:center;color:#fff;font-weight:800;font-size:.85rem}
+
+/* גוף מאמר מגזין */
+.post-body{font-size:1.12rem;line-height:1.95;color:#27313d}
+.post-body p{margin-bottom:20px}
+.post-body h2{font-size:clamp(1.4rem,3vw,1.9rem);font-weight:800;color:var(--ink);margin:38px 0 14px;letter-spacing:-.4px;position:relative;padding-right:16px}
+.post-body h2::before{content:"";position:absolute;right:0;top:.18em;bottom:.18em;width:5px;border-radius:3px;background:linear-gradient(var(--teal),var(--teal-dark))}
+.post-body h3{font-size:1.3rem;font-weight:700;color:var(--ink);margin:26px 0 10px}
+.post-body .dropcap::first-letter{float:right;font-size:3.4rem;line-height:.82;font-weight:900;color:var(--teal-dark);margin:6px 10px 0 6px;font-family:'Rubik',sans-serif}
+.post-body a{color:var(--teal-dark);font-weight:600;text-decoration:underline;text-decoration-color:rgba(0,137,123,.35)}
+
+/* figure עם קרדיט */
+figure.fig{margin:28px 0;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg);background:var(--bg-alt)}
+figure.fig img{width:100%;display:block}
+figure.fig figcaption{font-size:.86rem;color:var(--gray);padding:11px 16px;background:#fff;border-top:1px solid var(--border)}
+figure.fig figcaption .cr{color:var(--gray-soft);font-size:.8rem}
+
+/* ציטוט בולט */
+.pullquote{margin:30px 0;padding:6px 26px;border-right:5px solid var(--teal);font-size:clamp(1.3rem,3vw,1.65rem);font-weight:800;color:var(--ink);line-height:1.4;letter-spacing:-.3px}
+.pullquote span{color:var(--teal-dark)}
+
+/* קופסת "מעניין לדעת" */
+.factbox{background:linear-gradient(150deg,var(--teal-soft),#fff);border:1px solid var(--teal);border-radius:var(--radius);padding:20px 22px;margin:26px 0}
+.factbox b{color:var(--teal-dark)}
+.factbox .h{display:flex;align-items:center;gap:9px;font-weight:800;color:var(--ink);margin-bottom:8px;font-size:1.08rem}
+
+/* מילה בערבית בתוך טקסט (inline) */
+.ar-in{font-family:var(--font-ar);font-weight:700;color:var(--ink);direction:rtl;unicode-bidi:isolate}
+.tl-in{color:var(--teal-dark);font-weight:800}
+
+/* מפריד ערבסק */
+.divider{display:flex;align-items:center;justify-content:center;gap:14px;margin:34px 0;color:var(--teal)}
+.divider::before,.divider::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,transparent,var(--border),transparent)}
+.divider svg{width:30px;height:30px;flex:none;opacity:.8}
+
+/* מקורות/קרדיטים */
+.sources{font-size:.86rem;color:var(--gray-soft);border-top:1px solid var(--border);margin-top:34px;padding-top:16px}
+.sources a{color:var(--gray)}
+
+@media(max-width:640px){
+  .post-body{font-size:1.06rem}
+  .post-hero{border-radius:0 0 20px 20px}
+}
