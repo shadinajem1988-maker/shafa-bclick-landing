@@ -131,7 +131,8 @@ footer.site .small{color:rgba(255,255,255,.45);font-size:.85rem;margin-top:14px}
 .post-body h2{font-size:clamp(1.4rem,3vw,1.9rem);font-weight:800;color:var(--ink);margin:38px 0 14px;letter-spacing:-.4px;position:relative;padding-right:16px}
 .post-body h2::before{content:"";position:absolute;right:0;top:.18em;bottom:.18em;width:5px;border-radius:3px;background:linear-gradient(var(--teal),var(--teal-dark))}
 .post-body h3{font-size:1.3rem;font-weight:700;color:var(--ink);margin:26px 0 10px}
-.post-body .dropcap::first-letter{float:right;font-size:3.4rem;line-height:.82;font-weight:900;color:var(--teal-dark);margin:6px 10px 0 6px;font-family:'Rubik',sans-serif}
+.post-body .lead-in{font-size:1.18rem;color:#222}
+.post-body .lead-word{font-size:1.7rem;font-weight:900;color:var(--teal-dark);letter-spacing:-.5px}
 .post-body a{color:var(--teal-dark);font-weight:600;text-decoration:underline;text-decoration-color:rgba(0,137,123,.35)}
 
 /* figure עם קרדיט */
