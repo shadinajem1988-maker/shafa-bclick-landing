@@ -153,10 +153,10 @@ figure.fig figcaption .cr{color:var(--gray-soft);font-size:.8rem}
 .ar-in{font-family:var(--font-ar);font-weight:700;color:var(--ink);direction:rtl;unicode-bidi:isolate}
 .tl-in{color:var(--teal-dark);font-weight:800}
 
-/* מפריד ערבסק */
-.divider{display:flex;align-items:center;justify-content:center;gap:14px;margin:34px 0;color:var(--teal)}
-.divider::before,.divider::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,transparent,var(--border),transparent)}
-.divider svg{width:30px;height:30px;flex:none;opacity:.8}
+/* מפריד נקי (ללא סמלים) */
+.divider{display:flex;align-items:center;justify-content:center;gap:16px;margin:36px 0}
+.divider::before,.divider::after{content:"";height:1px;flex:1;max-width:110px;background:var(--border)}
+.divider span{color:var(--teal-dark);letter-spacing:7px;font-weight:900;font-size:1rem}
 
 /* מקורות/קרדיטים */
 .sources{font-size:.86rem;color:var(--gray-soft);border-top:1px solid var(--border);margin-top:34px;padding-top:16px}
